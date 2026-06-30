@@ -1,0 +1,86 @@
+{
+  "theme": "light",
+  "archetype": "Archetype 4: Swiss & High-Contrast",
+  "domain": "Developer Tools / Enterprise SaaS",
+  "colors": {
+    "background": "#F7F7F8",
+    "surface": "#FFFFFF",
+    "primary": "#008FD3",
+    "primary_hover": "#0073AA",
+    "text_main": "#111827",
+    "text_muted": "#4B5563",
+    "border": "#E5E7EB",
+    "accent_success": "#10B981",
+    "accent_warning": "#F59E0B",
+    "accent_error": "#EF4444",
+    "sidebar_bg": "#FFFFFF"
+  },
+  "typography": {
+    "heading_font": "Outfit",
+    "body_font": "IBM Plex Sans",
+    "code_font": "JetBrains Mono",
+    "scale": {
+      "h1": "text-4xl tracking-tight font-bold text-gray-900",
+      "h2": "text-2xl tracking-tight font-semibold text-gray-900",
+      "h3": "text-xl font-medium text-gray-800",
+      "body": "text-base leading-relaxed text-gray-700",
+      "small": "text-sm tracking-wide text-gray-500",
+      "code": "text-sm font-mono text-gray-200"
+    }
+  },
+  "layout_spacing": {
+    "sidebar_width": "w-64 md:w-72",
+    "sidebar_collapsed": "w-16",
+    "chat_container_max_width": "max-w-4xl mx-auto",
+    "padding_standard": "p-6 md:p-8",
+    "gap_standard": "gap-4 md:gap-6",
+    "grid_strategy": "MODE B: THE CONTROL ROOM GRID (Dense, data correlation, high scanability)",
+    "border_radius": "rounded-md"
+  },
+  "components": {
+    "sidebar": "Fixed left navigation pane, border-r border-border, transition-all duration-300 ease-in-out. Features 'Grid Borders' style. Contains collapsible sections for Chat History, User Profile, and a New Chat button. Active chat items use pure background shift, not pill shapes.",
+    "chat_area": "Main content area spanning remaining width. Flex-col layout, overflow-y-auto with custom non-gutter scrollbars. Messages should display progressively (simulated streaming). Includes specific developer tools: inline syntax-highlighted ABAP code blocks with Copy/Accept actions.",
+    "prompt_input": "Task-aware expandable prompt surface anchored at the bottom. Glassmorphism effect: backdrop-blur-xl bg-white/70, 1px inner border-white/40, shadow-sm. Features a 'WorkIQ' scope selector (e.g., 'Scope: Global', 'Scope: BAPI') and a 'Dynamic Action Button' for submitting.",
+    "code_block": "Retro-Futurism style. Deep black container (bg-gray-900) with subtle 1px border-gray-800. Top bar contains language label (ABAP) and contextual action buttons (Copy Code, Diff Accept). Text inside uses JetBrains Mono.",
+    "empty_state_cards": "Suggested prompts displayed in 'Bento' Grid Mode. Flat background, 1px border. On hover: slight lift (-translate-y-1), subtle shadow-lg, and border darkens. Examples: 'Write a SELECT query', 'Explain BAPI', 'Convert FORM to METHOD'.",
+    "login_page": "Split layout. Left: Minimal geometric abstract tech image. Right: Clean, high-contrast form using Shadcn input/button. Heavily styled with generous padding (p-12) to match enterprise authority."
+  },
+  "animations": {
+    "message_enter": "Fade in and slide up slightly for chat bubbles (initial opacity 0, y 10).",
+    "sidebar_toggle": "Smooth width transition with ease-in-out to prevent layout thrash.",
+    "hover_states": "Buttons and cards must have background tint shifts. Interactive elements explicitly set hover text color.",
+    "voice_active": "When voice input is active, apply 'The Tracing Beam' effect (a glowing gradient border tracing the mic button) to signal active listening."
+  },
+  "media_and_icons": {
+    "icon_library": "lucide-react",
+    "images": {
+      "login_background": {
+        "url": "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg",
+        "description": "Abstract green matrix code background, used for the left side of the login screen to emphasize developer focus. Implement with bg-black/50 overlay.",
+        "category": "background"
+      },
+      "user_avatar": {
+        "url": "https://images.pexels.com/photos/19805878/pexels-photo-19805878.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Professional developer portrait, used in the sidebar for user profile.",
+        "category": "avatar"
+      }
+    },
+    "logo_instructions": "Render the SAP logo purely with typography and styling: `<span className=\"font-black text-[#008FD3] tracking-tighter\">SAP</span> Copilot`. Do NOT attempt to use an image URL for the brand logo."
+  },
+  "accessibility": {
+    "contrast": "Ensure all text meets APCA guidelines (min 4.5:1 for normal text). Overlays must not go darker than bg-black/50.",
+    "focus": "Apply focus:bg-gray-50 focus:ring-2 focus:ring-[#008FD3] on all inputs and interactive elements.",
+    "data_testid": "MANDATORY on all interactive elements. Follow role-based kebab-case (e.g., data-testid='new-chat-button', data-testid='voice-input-toggle', data-testid='chat-history-item', data-testid='login-submit-button')."
+  },
+  "development_rules": {
+    "framework": "React, Tailwind CSS, Shadcn UI",
+    "file_type": "JavaScript (.js/.jsx). Do not use TypeScript.",
+    "component_libraries": "Use Shadcn components heavily customized to avoid the default 'Vercel look'. Remove rounded-xl corners in favor of rounded-md to match 'Swiss & High-Contrast' rigidity.",
+    "grid_structure": "Grid items MUST be direct children. Override default stretch with align-items: start."
+  },
+  "specific_functionalities": {
+    "voice_input": "Mic icon button in prompt bar. Requires clear visual feedback (pulse or tracing beam) when active.",
+    "chat_history": "Clickable list items in sidebar. Must support active state highlighting. Ensure developers can switch contexts seamlessly.",
+    "copilot_features": "Integrate 'WorkIQ' contextual scope badge above or inside the prompt input. Avoid full-screen chat dominance; reserve space for code block display."
+  }
+}

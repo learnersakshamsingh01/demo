@@ -1,0 +1,20 @@
+{
+  "summary": "Verified Emergent badge has been completely removed from both landing page and /app dashboard on the public preview URL. Custom 'Made by Saksham Singh' badge is visible bottom-left. Login flow with demo@sap.com/demo123 works and navigates to /app. No 'Gemini 3 Flash' label found in dashboard toolbar.",
+  "tested_scope": ["frontend", "integration"],
+  "passed": [
+    "Landing page: #emergent-badge count = 0",
+    "Landing page: a[href*='emergent.sh'] count = 0",
+    "Landing page: 'Made with Emergent' text count = 0",
+    "Landing page: custom [data-testid='made-by-badge'] visible with text 'Made by Saksham Singh'",
+    "Landing page renders (hero, CTAs 'Start coding free' / 'I have an account', code preview visible)",
+    "Login flow: demo@sap.com / demo123 successfully navigates to /app",
+    "Dashboard /app: #emergent-badge count = 0, a[emergent.sh] count = 0, 'Made with Emergent' count = 0",
+    "Dashboard /app: 'Gemini 3 Flash' label absent (count = 0)",
+    "Dashboard /app: custom Made by Saksham Singh badge still visible bottom-left"
+  ],
+  "failed": [],
+  "action_items": [],
+  "success_rate": {"backend": "skipped", "frontend": "100%"},
+  "retest_needed": false,
+  "full_testing_deferred": true
+}

@@ -1,0 +1,37 @@
+{
+  "summary": "Smoke-tested the 4 new features (Gemini image gen, SAP Help search, Analyse-client-ready button, Export/download). Backend: all 3 critical endpoints PASS (auth 401 on unauthenticated, /api/sap-help returns 6 real help.sap.com results, /api/generate-image returns base64 image, ~10s). Frontend: SAP Help dialog works end-to-end (6 results, real URLs), Image Gen dialog works end-to-end (image rendered, download button visible), Analyse-client-ready button visible on assistant message in existing session and clickable, Export button triggers .md download (sap-copilot-chat-<ts>.md). One observation: on a brand-new session, the first assistant streaming response did not render in the UI within 60s even though backend POST /chat returned 200; same UI works fine on the existing 'Hi SAP' session, so likely a transient first-message streaming issue and not a blocker. Login endpoint returns 'token' (not 'access_token') — already handled by frontend.",
+  "tested_scope": ["frontend", "backend", "auth", "integration"],
+  "passed": [
+    "POST /api/auth/login -> 200 with token",
+    "POST /api/generate-image without auth -> 401",
+    "GET /api/sap-help without auth -> 401",
+    "GET /api/sap-help?q=BAPI sales order -> 200, 6 results, real help.sap.com URLs, search_url present",
+    "POST /api/generate-image (no session_id) -> 200, image data URL (image/jpeg base64), ~10s",
+    "Login UI -> redirects to /app dashboard",
+    "sap-help-trigger opens sap-help-dialog; search returns 6 sap-help-result-N cards with real https://help.sap.com URLs",
+    "image-gen-trigger opens image-gen-dialog; submitting prompt renders image-gen-result and shows image-gen-download",
+    "Existing chat session: analyze-client-ready-button visible on assistant message and clickable",
+    "download-chat-button triggers .md download with filename sap-copilot-chat-<ts>.md"
+  ],
+  "failed": [
+    {
+      "area": "frontend chat streaming (new session)",
+      "issue": "After sending the first message in a freshly created session, the assistant reply did not render in the UI within 60s, so analyze-client-ready-button never appeared on that new session. Backend logs show POST /api/sessions/<id>/chat returned 200 OK.",
+      "evidence": "Screenshot showed only the user bubble; analyze button timeout. Backend log: 'POST /api/sessions/6652fd89-.../chat HTTP/1.1 200 OK'. The same UI fully works on the existing 'Hi SAP' session.",
+      "priority": "MEDIUM"
+    },
+    {
+      "area": "frontend code-block buttons",
+      "issue": "Could not verify copy-code-button / download-code-button — the assistant messages reached in this test did not contain ```code``` blocks (only formatted text), so count=0. Not a defect, just untested.",
+      "evidence": "copy-code-button count: 0, download-code-button count: 0 on 'Hi SAP' welcome message",
+      "priority": "LOW"
+    }
+  ],
+  "action_items": [
+    "Investigate first-message streaming render on a brand-new session: confirm SSE/stream parsing flushes the first delta to the message list even when the assistant message bubble has just been created.",
+    "Optionally seed a session with a code-heavy reply to manually verify copy-code-button and download-code-button data-testids in MessageBubble."
+  ],
+  "success_rate": {"backend": "100%", "frontend": "~85%"},
+  "retest_needed": true,
+  "full_testing_deferred": true
+}
